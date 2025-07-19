@@ -7,3 +7,7 @@ resource "azurerm_resource_group" "resource_group" {
 
 #Press Esc to make sure you’re in command mode (not insert mode).
 
+resource "azurerm_resource_group" "resource_group" {
+  name     = var.resource_group_name
+  location = var.resource_group_location
+}
