@@ -1,40 +1,47 @@
 trigger:
-  - main  # Change if needed
+  - main   # Change branch name if needed
 
 pool:
   name: Default
   demands:
-    - Agent.Name -equals firsttask
+    - Agent.Name -equals firsttask   # Agent name as per your screenshot
 
 variables:
-  terraformWorkingDir: '.'     # Update if .tf files are inside a folder
-  destroyMode: 'false'         # Change to 'true' to enable destroy in pipeline
+  terraformWorkingDir: 'todoapp_infra'  # Folder jahan tera .tf files hain
+  destroyMode: 'false'                   # "true" set karoge to terraform destroy chalega
 
 steps:
+  # Step 1: Install Terraform latest version
   - task: TerraformInstaller@1
     displayName: 'Install Terraform'
     inputs:
       terraformVersion: 'latest'
 
-  - script: |
-      terraform --version
+  # Step 2: Show terraform version for debug
+  - script: terraform --version
     displayName: 'Check Terraform Version'
 
+  # Step 3: Terraform Init (initiate working directory)
   - script: |
       cd $(terraformWorkingDir)
       terraform init
     displayName: 'Terraform Init'
 
+  # Step 4: Terraform Format Check (to ensure code style)
   - script: |
       cd $(terraformWorkingDir)
       terraform fmt -check
     displayName: 'Terraform Format Check'
 
+  # Step 5: Terraform Plan (create execution plan)
   - script: |
       cd $(terraformWorkingDir)
       terraform plan -out=tfplan.out
     displayName: 'Terraform Plan'
 
-  # ✅ Optional Terraform Destroy step – runs only if destroyMode == true
-  - ${{ if eq(variables['destroyMode'], 'true') }}:
-      - script:
+  # Step 6 (Optional): Terraform Destroy (runs only if destroyMode is true)
+  - script: |
+      cd $(terraformWorkingDir)
+      terraform destroy -auto-approve
+    condition: and(succeeded(), eq(variables['destroyMode'], 'true'))
+    displayName: 'Terraform Destroy'
