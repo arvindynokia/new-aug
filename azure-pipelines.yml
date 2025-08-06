@@ -1,0 +1,40 @@
+trigger:
+  - main  # Change if needed
+
+pool:
+  name: Default
+  demands:
+    - Agent.Name -equals firsttest
+
+variables:
+  terraformWorkingDir: '.'     # Update if .tf files are inside a folder
+  destroyMode: 'false'         # Change to 'true' to enable destroy in pipeline
+
+steps:
+  - task: TerraformInstaller@1
+    displayName: 'Install Terraform'
+    inputs:
+      terraformVersion: 'latest'
+
+  - script: |
+      terraform --version
+    displayName: 'Check Terraform Version'
+
+  - script: |
+      cd $(terraformWorkingDir)
+      terraform init
+    displayName: 'Terraform Init'
+
+  - script: |
+      cd $(terraformWorkingDir)
+      terraform fmt -check
+    displayName: 'Terraform Format Check'
+
+  - script: |
+      cd $(terraformWorkingDir)
+      terraform plan -out=tfplan.out
+    displayName: 'Terraform Plan'
+
+  # ✅ Optional Terraform Destroy step – runs only if destroyMode == true
+  - ${{ if eq(variables['destroyMode'], 'true') }}:
+      - script:
