@@ -4,7 +4,7 @@ trigger:
 pool:
   name: Default
   demands:
-    - Agent.Name -equals firsttest
+    - Agent.Name -equals firsttask
 
 variables:
   terraformWorkingDir: '.'     # Update if .tf files are inside a folder
