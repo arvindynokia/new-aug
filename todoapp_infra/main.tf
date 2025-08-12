@@ -105,6 +105,7 @@ module "frontend_vm2" {
   key_vault_name       = "sonamkitijori"
   username_secret_name = "vm-username"
   password_secret_name = "vm-password"
+  public_ip_name       = "pip-todoapp-frontend"
 }
 
 # module "public_ip_backend" {

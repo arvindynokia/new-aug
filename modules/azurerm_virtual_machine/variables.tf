@@ -66,3 +66,7 @@ variable "vnet_name" {
 variable "key_vault_name" {}
 variable "username_secret_name" {}
 variable "password_secret_name" {}
+variable "public_ip_name" {
+  description = "The name of the existing public IP to fetch from Azure"
+  type        = string
+}
