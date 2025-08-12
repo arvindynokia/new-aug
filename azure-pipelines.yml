@@ -39,9 +39,4 @@ steps:
       terraform plan -out=tfplan.out
     displayName: 'Terraform Plan'
 
-  # Step 6 (Optional): Terraform Destroy (runs only if destroyMode is true)
-  - script: |
-      cd $(terraformWorkingDir)
-      terraform destroy -auto-approve
-    condition: and(succeeded(), eq(variables['destroyMode'], 'true'))
-    displayName: 'Terraform Destroy'
+ 
