@@ -10,7 +10,7 @@ data "azurerm_subnet" "frontend_subnet" {
 }
 
 data "azurerm_key_vault" "kv" {
-  name                = var.key_vault_name
+  name                = "sonamkitijori123"
   resource_group_name = var.resource_group_name
 }
 

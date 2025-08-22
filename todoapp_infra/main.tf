@@ -159,7 +159,7 @@ module "frontend_vm2" {
 
 module "key_vault" {
   source              = "../modules/azurerm_key_vault"
-  key_vault_name      = "sonamkitijori"
+  key_vault_name      = "sonamkitijori123"
   location            = "centralindia"
   resource_group_name = "rg-todoapp"
 }
@@ -167,7 +167,7 @@ module "key_vault" {
 module "vm_password" {
   source              = "../modules/azurerm_key_vault_secret"
   depends_on          = [module.key_vault]
-  key_vault_name      = "sonamkitijori"
+  key_vault_name      = "sonamkitijori123"
   resource_group_name = "rg-todoapp"
   secret_name         = "vm-password"
   secret_value        = "P@ssw01rd@123"
@@ -176,7 +176,7 @@ module "vm_password" {
 module "vm_username" {
   source              = "../modules/azurerm_key_vault_secret"
   depends_on          = [module.key_vault]
-  key_vault_name      = "sonamkitijori"
+  key_vault_name      = "sonamkitijori123"
   resource_group_name = "rg-todoapp"
   secret_name         = "vm-username"
   secret_value        = "devopsadmin"
